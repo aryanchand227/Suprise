@@ -20,6 +20,7 @@ export default function LockScreen() {
   const [wrongAttempts, setWrongAttempts] = useState(0);
   const [settings, setSettings] = useState(defaultSettings);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [showDeviceNotice, setShowDeviceNotice] = useState(true);
   const { unlock } = useAppStore();
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -336,6 +337,102 @@ export default function LockScreen() {
       <AnimatePresence>
         {showBirthday && (
           <BirthdaySurprise onComplete={() => router.push('/book')} />
+        )}
+      </AnimatePresence>
+
+      {/* Device notice modal */}
+      <AnimatePresence>
+        {showDeviceNotice && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4"
+            style={{
+              background: 'rgba(13, 6, 24, 0.85)',
+              backdropFilter: 'blur(10px)',
+            }}
+          >
+            <motion.div
+              initial={{ scale: 0.9, y: 20, opacity: 0 }}
+              animate={{ scale: 1, y: 0, opacity: 1 }}
+              exit={{ scale: 0.9, y: 20, opacity: 0 }}
+              transition={{ type: 'spring', damping: 25, stiffness: 350 }}
+              className="w-full max-w-md p-6 rounded-2xl border text-center relative overflow-hidden"
+              style={{
+                background: 'linear-gradient(135deg, rgba(45, 27, 105, 0.9) 0%, rgba(26, 10, 46, 0.95) 100%)',
+                borderColor: 'rgba(212, 175, 55, 0.4)',
+                boxShadow: '0 20px 50px rgba(0, 0, 0, 0.7), 0 0 30px rgba(155, 114, 207, 0.25)',
+              }}
+            >
+              {/* Glowing decorative background orbs inside modal */}
+              <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-30">
+                <div 
+                  className="absolute rounded-full" 
+                  style={{
+                    width: '150px',
+                    height: '150px',
+                    background: 'radial-gradient(circle, rgba(212,175,55,0.2) 0%, transparent 70%)',
+                    top: '-20%',
+                    right: '-20%',
+                    filter: 'blur(20px)',
+                  }}
+                />
+              </div>
+
+              {/* Icon */}
+              <motion.div
+                animate={{ y: [0, -6, 0] }}
+                transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+                className="mx-auto mb-5 w-16 h-16 rounded-full flex items-center justify-center"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(155, 114, 207, 0.2), rgba(107, 70, 193, 0.2))',
+                  border: '1px solid rgba(155, 114, 207, 0.3)',
+                }}
+              >
+                <span style={{ fontSize: '2rem' }}>🖥️</span>
+              </motion.div>
+
+              {/* Title */}
+              <h2 
+                className="text-2xl mb-3"
+                style={{
+                  fontFamily: 'Playfair Display, serif',
+                  background: 'linear-gradient(135deg, #faf3e0 0%, #d4af37 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                  fontWeight: 600,
+                }}
+              >
+                Optimal View Required
+              </h2>
+
+              {/* Description */}
+              <p
+                className="mb-6 leading-relaxed"
+                style={{
+                  fontFamily: 'Inter, system-ui, sans-serif',
+                  color: 'rgba(250, 243, 224, 0.85)',
+                  fontSize: '0.95rem',
+                }}
+              >
+                Please use laptop or computer or desktop view for this. Don't do in phone/mobile.
+              </p>
+
+              {/* Dismiss Button */}
+              <button
+                onClick={() => setShowDeviceNotice(false)}
+                className="glow-btn px-8 py-3 w-full font-medium cursor-pointer"
+                style={{
+                  fontFamily: 'Playfair Display, serif',
+                  fontSize: '1rem',
+                }}
+              >
+                Got It
+              </button>
+            </motion.div>
+          </motion.div>
         )}
       </AnimatePresence>
     </main>
