@@ -64,54 +64,49 @@ export default function BookPresentation({ title, subtitle, coverImageUrl, onOpe
 
             {/* Cover image or decorative center */}
             <div className="flex-1 flex items-center justify-center w-full my-6">
-              {coverImageUrl ? (
-                <img
-                  src={coverImageUrl}
-                  alt="Book cover"
-                  className="w-full h-64 object-cover rounded-lg"
-                  style={{ opacity: 0.85, boxShadow: '0 4px 25px rgba(0,0,0,0.6)' }}
-                />
-              ) : (
-                <div className="flex flex-col items-center gap-6">
-                  {/* Decorative emblem */}
-                  <motion.div
-                    animate={{ opacity: [0.6, 1, 0.6] }}
-                    transition={{ duration: 3, repeat: Infinity }}
-                  >
-                    <svg width="120" height="120" viewBox="0 0 100 100" fill="none">
-                      <circle cx="50" cy="50" r="40" stroke="#d4af37" strokeWidth="0.8" opacity="0.5" />
-                      <circle cx="50" cy="50" r="30" stroke="#d4af37" strokeWidth="0.5" opacity="0.3" />
-                      <path d="M50 15 L53 40 L78 40 L57 55 L65 80 L50 65 L35 80 L43 55 L22 40 L47 40 Z"
-                        fill="#d4af37" opacity="0.6" />
-                      <circle cx="50" cy="50" r="6" fill="#f5e09a" opacity="0.8" />
-                    </svg>
-                  </motion.div>
-
-                  {/* Title on cover */}
-                  <div className="text-center px-4">
-                    <h2 style={{
-                      fontFamily: 'Playfair Display, serif',
-                      fontSize: '2.2rem',
-                      fontWeight: 600,
-                      color: '#f5e09a',
-                      textShadow: '0 0 25px rgba(212,175,55,0.6)',
-                      lineHeight: 1.25,
-                    }}>
-                      {title}
-                    </h2>
-                    <div className="w-24 h-px mx-auto my-4" style={{ background: 'linear-gradient(90deg, transparent, #d4af37, transparent)' }} />
-                    <p style={{
-                      fontFamily: 'EB Garamond, serif',
-                      fontSize: '1rem',
-                      color: 'rgba(212,175,55,0.65)',
-                      fontStyle: 'italic',
-                      letterSpacing: '0.05em',
-                    }}>
-                      {subtitle}
-                    </p>
+              <div className="flex flex-col items-center gap-6">
+                {/* Decorative emblem / small cover photo */}
+                <motion.div
+                  className="p-1 rounded-lg"
+                  style={{
+                    background: 'linear-gradient(135deg, #d4af37, #f5e09a, #a07c20)',
+                    boxShadow: '0 8px 30px rgba(0,0,0,0.5)',
+                  }}
+                  whileHover={{ scale: 1.05 }}
+                >
+                  <div className="w-36 h-36 overflow-hidden rounded-md border border-black/40 bg-cream-page">
+                    <img
+                      src="/images/coverpic.jpg"
+                      alt="Book cover pic"
+                      className="w-full h-full object-cover"
+                    />
                   </div>
+                </motion.div>
+
+                {/* Title on cover */}
+                <div className="text-center px-4">
+                  <h2 style={{
+                    fontFamily: 'Playfair Display, serif',
+                    fontSize: '2.2rem',
+                    fontWeight: 600,
+                    color: '#f5e09a',
+                    textShadow: '0 0 25px rgba(212,175,55,0.6)',
+                    lineHeight: 1.25,
+                  }}>
+                    {title}
+                  </h2>
+                  <div className="w-24 h-px mx-auto my-4" style={{ background: 'linear-gradient(90deg, transparent, #d4af37, transparent)' }} />
+                  <p style={{
+                    fontFamily: 'EB Garamond, serif',
+                    fontSize: '1rem',
+                    color: 'rgba(212,175,55,0.65)',
+                    fontStyle: 'italic',
+                    letterSpacing: '0.05em',
+                  }}>
+                    {subtitle}
+                  </p>
                 </div>
-              )}
+              </div>
             </div>
 
             {/* Bottom filigree */}

@@ -53,7 +53,7 @@ export default function BookPage() {
     setIsBookOpen(true);
   };
 
-  // Floating background blobs
+  // Floating background blobs (shown on cover page)
   const floatingBlobs = [
     { w: 320, h: 400, top: '5%', left: '2%', opacity: 0.08 },
     { w: 260, h: 340, top: '55%', left: '72%', opacity: 0.07 },
@@ -65,10 +65,10 @@ export default function BookPage() {
     <main style={{ minHeight: '100vh', background: 'radial-gradient(ellipse at 50% 30%, #2d1b69 0%, #1a0a2e 45%, #0d0618 100%)', position: 'relative', overflow: 'hidden' }}>
       <AudioManager />
 
-      {/* Floating background memory photos */}
-      {floatingBlobs.map((blob, i) => (
+      {/* Floating background blobs (for closed cover screen) */}
+      {!isBookOpen && floatingBlobs.map((blob, i) => (
         <motion.div
-          key={i}
+          key={`blob-${i}`}
           style={{
             position: 'absolute',
             width: blob.w, height: blob.h,
@@ -82,6 +82,48 @@ export default function BookPage() {
           animate={{ y: [0, -20, 5, -12, 0], rotate: [i % 2 === 0 ? -2 : 1, i % 2 === 0 ? 0 : 3, i % 2 === 0 ? -2 : 1] }}
           transition={{ duration: 10 + i * 2, repeat: Infinity, ease: 'easeInOut', delay: i * 1.5 }}
         />
+      ))}
+
+      {/* Real memory photos floating around (active when book is open) */}
+      {isBookOpen && [
+        { src: '/images/float1.jpg', w: 180, h: 220, top: '8%', left: '3%', rot: -6, delay: 0 },
+        { src: '/images/float2.jpg', w: 190, h: 230, top: '50%', left: '76%', rot: 8, delay: 1.5 },
+        { src: '/images/float3.jpg', w: 170, h: 210, top: '15%', left: '78%', rot: -8, delay: 3 },
+        { src: '/images/float4.jpg', w: 200, h: 240, top: '58%', left: '4%', rot: 6, delay: 4.5 },
+      ].map((pic, i) => (
+        <motion.div
+          key={`photo-${i}`}
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ 
+            opacity: 0.32, 
+            scale: 1,
+            y: [0, -25, 10, -15, 0],
+            rotate: [pic.rot, pic.rot + 4, pic.rot - 2, pic.rot]
+          }}
+          transition={{
+            opacity: { duration: 1.5 },
+            scale: { duration: 1.5 },
+            y: { duration: 14 + i * 3, repeat: Infinity, ease: 'easeInOut' },
+            rotate: { duration: 12 + i * 4, repeat: Infinity, ease: 'easeInOut' }
+          }}
+          style={{
+            position: 'absolute',
+            width: pic.w, height: pic.h,
+            top: pic.top, left: pic.left,
+            pointerEvents: 'none',
+            zIndex: 1,
+          }}
+          className="hidden md:flex flex-col p-2.5 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 shadow-[0_12px_40px_rgba(0,0,0,0.4)]"
+        >
+          <div className="w-full flex-1 overflow-hidden rounded-lg">
+            <img src={pic.src} alt={`Memory ${i+1}`} className="w-full h-full object-cover grayscale-[15%] opacity-90" />
+          </div>
+          <div className="h-6 flex items-center justify-center mt-1.5">
+            <span style={{ fontFamily: 'Dancing Script, cursive', fontSize: '0.85rem', color: '#c4b5fd' }}>
+              Hasini 💜
+            </span>
+          </div>
+        </motion.div>
       ))}
 
       {/* Ambient glow orbs */}

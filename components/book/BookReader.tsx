@@ -105,12 +105,23 @@ export default function BookReader({ chapters }: BookReaderProps) {
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             boxShadow: 'inset -4px 0 20px rgba(0,0,0,0.5)',
           }}>
-            <div className="text-center px-10">
-              <div style={{ width: 100, height: 1, background: 'linear-gradient(90deg, transparent, #d4af37, transparent)', margin: '0 auto 24px' }} />
+            <div className="text-center px-10 flex flex-col items-center">
+              <div style={{ width: 100, height: 1, background: 'linear-gradient(90deg, transparent, #d4af37, transparent)', margin: '0 auto 20px' }} />
+              
+              {/* Cover small photo */}
+              <div className="p-1 rounded-lg mb-4" style={{
+                background: 'linear-gradient(135deg, #d4af37, #f5e09a, #a07c20)',
+                boxShadow: '0 8px 25px rgba(0,0,0,0.5)',
+              }}>
+                <div className="w-28 h-28 overflow-hidden rounded-md border border-black/40 bg-cream-page">
+                  <img src="/images/coverpic.jpg" alt="Cover pic" className="w-full h-full object-cover" />
+                </div>
+              </div>
+
               <h1 style={{ fontFamily: 'Playfair Display, serif', fontSize: '2.4rem', color: '#f5e09a', fontStyle: 'italic', lineHeight: 1.3 }}>
                 My Thoughts
               </h1>
-              <div style={{ width: 100, height: 1, background: 'linear-gradient(90deg, transparent, #d4af37, transparent)', margin: '18px auto' }} />
+              <div style={{ width: 100, height: 1, background: 'linear-gradient(90deg, transparent, #d4af37, transparent)', margin: '12px auto' }} />
               <p style={{ fontFamily: 'EB Garamond, serif', fontSize: '1.05rem', color: 'rgba(212,175,55,0.6)', fontStyle: 'italic', lineHeight: 1.5 }}>
                 Some words I never stopped carrying.
               </p>

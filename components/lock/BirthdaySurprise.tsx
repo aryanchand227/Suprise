@@ -346,6 +346,70 @@ export default function BirthdaySurprise({ onComplete }: Props) {
               A secret is waiting behind this door, just for you.
             </motion.p>
 
+            {/* Left and Right floating photos (Desktop view) */}
+            <motion.div
+              initial={{ opacity: 0, x: -60, rotate: -15, scale: 0.8 }}
+              animate={phase === 'fadeout'
+                ? { opacity: 0, x: -100, rotate: -25, scale: 0.7 }
+                : { opacity: 1, x: 0, rotate: -8, scale: 1 }
+              }
+              transition={{ duration: 1.0, ease: 'easeOut', delay: 0.2 }}
+              style={{
+                position: 'absolute',
+                left: '-260px',
+                top: '5%',
+                width: '180px',
+                pointerEvents: 'none',
+              }}
+              className="hidden lg:flex flex-col p-3 bg-white/10 backdrop-blur-sm rounded-xl border border-white/20 shadow-[0_15px_35px_rgba(0,0,0,0.4)]"
+            >
+              <div className="w-full h-40 overflow-hidden rounded-lg">
+                <img src="/images/happybirthday.jpg" alt="Hasini" className="w-full h-full object-cover" />
+              </div>
+              <p className="mt-2 text-center text-amber-200/90 text-sm font-semibold" style={{ fontFamily: 'Dancing Script, cursive', fontSize: '1.1rem' }}>
+                Pure Joy ✨
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 60, rotate: 15, scale: 0.8 }}
+              animate={phase === 'fadeout'
+                ? { opacity: 0, x: 100, rotate: 25, scale: 0.7 }
+                : { opacity: 1, x: 0, rotate: 8, scale: 1 }
+              }
+              transition={{ duration: 1.0, ease: 'easeOut', delay: 0.3 }}
+              style={{
+                position: 'absolute',
+                right: '-260px',
+                top: '12%',
+                width: '180px',
+                pointerEvents: 'none',
+              }}
+              className="hidden lg:flex flex-col p-3 bg-white/10 backdrop-blur-sm rounded-xl border border-white/20 shadow-[0_15px_35px_rgba(0,0,0,0.4)]"
+            >
+              <div className="w-full h-40 overflow-hidden rounded-lg">
+                <img src="/images/happybirthday2.jpg" alt="Hasini" className="w-full h-full object-cover" />
+              </div>
+              <p className="mt-2 text-center text-amber-200/90 text-sm font-semibold" style={{ fontFamily: 'Dancing Script, cursive', fontSize: '1.1rem' }}>
+                With Love 💜
+              </p>
+            </motion.div>
+
+            {/* Mobile / Tablet inline photos */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={phase === 'fadeout' ? { opacity: 0, y: -20 } : { opacity: 1, y: 0 }}
+              transition={{ delay: 0.8 }}
+              className="flex lg:hidden items-center justify-center gap-4 mt-6 pointer-events-none"
+            >
+              <div className="w-24 h-32 p-1.5 bg-white/10 backdrop-blur-sm rounded-lg border border-white/20 shadow-md rotate-[-4deg]">
+                <img src="/images/happybirthday.jpg" alt="Hasini" className="w-full h-24 object-cover rounded" />
+              </div>
+              <div className="w-24 h-32 p-1.5 bg-white/10 backdrop-blur-sm rounded-lg border border-white/20 shadow-md rotate-[4deg]">
+                <img src="/images/happybirthday2.jpg" alt="Hasini" className="w-full h-24 object-cover rounded" />
+              </div>
+            </motion.div>
+
             {/* Pulsing glow ring */}
             <motion.div
               animate={{
