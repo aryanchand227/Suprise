@@ -20,6 +20,29 @@ export default function BookReader({ chapters }: BookReaderProps) {
   const [isFlipping, setIsFlipping] = useState(false);
   const { visitorId, isMuted } = useAppStore();
 
+  const [dimensions, setDimensions] = useState({ width: 420, height: 580 });
+  const [usePortrait, setUsePortrait] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const isMobile = window.innerWidth < 768;
+      setUsePortrait(isMobile);
+      if (isMobile) {
+        // Dynamic scaling factor on mobile
+        const scale = Math.min((window.innerWidth - 32) / 420, 1);
+        setDimensions({
+          width: Math.floor(420 * scale),
+          height: Math.floor(580 * scale)
+        });
+      } else {
+        setDimensions({ width: 420, height: 580 });
+      }
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const totalPages = chapters.length + 3; // cover + TOC + chapters + final
 
   const playFlipSound = useCallback(() => {
@@ -74,16 +97,16 @@ export default function BookReader({ chapters }: BookReaderProps) {
       <div className="relative">
         <HTMLFlipBook
           ref={bookRef}
-          width={420}
-          height={580}
+          width={dimensions.width}
+          height={dimensions.height}
           size="fixed"
-          minWidth={320}
+          minWidth={280}
           maxWidth={600}
-          minHeight={440}
+          minHeight={380}
           maxHeight={800}
           drawShadow={true}
           flippingTime={700}
-          usePortrait={false}
+          usePortrait={usePortrait}
           startPage={0}
           autoSize={false}
           clickEventForward={false}
