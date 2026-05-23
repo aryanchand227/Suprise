@@ -5,7 +5,11 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholde
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-// â”€â”€â”€ Type definitions â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+export const isOffline = !process.env.NEXT_PUBLIC_SUPABASE_URL || 
+                         process.env.NEXT_PUBLIC_SUPABASE_URL.includes('placeholder') || 
+                         process.env.NEXT_PUBLIC_SUPABASE_URL === '';
+
+// ──────────────────────────────────────────────────────────────────
 export interface SiteSettings {
   id: number;
   passcode: string;
@@ -47,22 +51,24 @@ export interface Reply {
   submitted_at: string;
 }
 
-// â”€â”€â”€ Helper functions â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ──────────────────────────────────────────────────────────────────
 
 export async function getSettings(): Promise<SiteSettings | null> {
+  if (isOffline) return defaultSettings;
   try {
     const { data, error } = await supabase
       .from('settings')
       .select('*')
       .single();
-    if (error) return null;
-    return data;
+    if (error) return defaultSettings;
+    return data || defaultSettings;
   } catch {
-    return null;
+    return defaultSettings;
   }
 }
 
 export async function getChapters(): Promise<Chapter[]> {
+  if (isOffline) return defaultChapters;
   try {
     const { data, error } = await supabase
       .from('chapters')
@@ -76,6 +82,7 @@ export async function getChapters(): Promise<Chapter[]> {
 }
 
 export async function createVisitor(): Promise<string | null> {
+  if (isOffline) return null;
   try {
     const { data, error } = await supabase
       .from('visitors')
@@ -90,12 +97,17 @@ export async function createVisitor(): Promise<string | null> {
 }
 
 export async function updateVisitor(id: string, updates: Partial<Visitor>) {
+  if (isOffline) return;
   try {
     await supabase.from('visitors').update(updates).eq('id', id);
   } catch {}
 }
 
 export async function submitReply(visitorId: string | null, content: string) {
+  if (isOffline) {
+    console.log("Offline mode: Saved reply letter to console:", content);
+    return true;
+  }
   try {
     const { error } = await supabase
       .from('replies')
@@ -112,6 +124,7 @@ export async function submitReply(visitorId: string | null, content: string) {
 // â”€â”€â”€ Admin helper functions â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export async function updateSettings(updates: Partial<Omit<SiteSettings, 'id'>>) {
+  if (isOffline) return true;
   try {
     const { error } = await supabase
       .from('settings')
@@ -124,6 +137,7 @@ export async function updateSettings(updates: Partial<Omit<SiteSettings, 'id'>>)
 }
 
 export async function updateChapter(id: number, updates: Partial<Omit<Chapter, 'id'>>) {
+  if (isOffline) return true;
   try {
     const { error } = await supabase
       .from('chapters')
@@ -136,6 +150,7 @@ export async function updateChapter(id: number, updates: Partial<Omit<Chapter, '
 }
 
 export async function createChapter(chapter: Omit<Chapter, 'id'>): Promise<Chapter | null> {
+  if (isOffline) return { id: Math.floor(Math.random() * 1000), ...chapter } as Chapter;
   try {
     const { data, error } = await supabase
       .from('chapters')
@@ -150,6 +165,7 @@ export async function createChapter(chapter: Omit<Chapter, 'id'>): Promise<Chapt
 }
 
 export async function deleteChapter(id: number) {
+  if (isOffline) return true;
   try {
     const { error } = await supabase
       .from('chapters')
@@ -162,6 +178,7 @@ export async function deleteChapter(id: number) {
 }
 
 export async function reorderChapters(orderedIds: { id: number; order_index: number }[]) {
+  if (isOffline) return true;
   try {
     for (const item of orderedIds) {
       await supabase
@@ -209,6 +226,7 @@ export async function getAnalytics(): Promise<Analytics> {
 }
 
 export async function getVisitors(): Promise<Visitor[]> {
+  if (isOffline) return [];
   try {
     const { data, error } = await supabase
       .from('visitors')
@@ -222,6 +240,7 @@ export async function getVisitors(): Promise<Visitor[]> {
 }
 
 export async function getReplies(): Promise<Reply[]> {
+  if (isOffline) return [];
   try {
     const { data, error } = await supabase
       .from('replies')
