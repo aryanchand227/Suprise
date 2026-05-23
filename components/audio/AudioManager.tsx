@@ -12,7 +12,7 @@ export default function AudioManager() {
   useEffect(() => {
     const audio = new Audio('/sounds/ambient-piano.mp3');
     audio.loop = true;
-    audio.volume = 0.02;
+    audio.volume = 0.5;
     setAmbientAudio(audio);
 
     const startAudio = () => {
