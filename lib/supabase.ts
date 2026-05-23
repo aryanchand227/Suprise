@@ -89,9 +89,13 @@ export async function createVisitor(): Promise<string | null> {
       .insert({ unlocked: false, pages_viewed: 0, duration_seconds: 0, replied: false })
       .select('id')
       .single();
-    if (error) return null;
+    if (error) {
+      console.error("Supabase createVisitor error:", error);
+      return null;
+    }
     return data?.id || null;
-  } catch {
+  } catch (err) {
+    console.error("Supabase createVisitor exception:", err);
     return null;
   }
 }
@@ -99,8 +103,13 @@ export async function createVisitor(): Promise<string | null> {
 export async function updateVisitor(id: string, updates: Partial<Visitor>) {
   if (isOffline) return;
   try {
-    await supabase.from('visitors').update(updates).eq('id', id);
-  } catch {}
+    const { error } = await supabase.from('visitors').update(updates).eq('id', id);
+    if (error) {
+      console.error("Supabase updateVisitor error:", error);
+    }
+  } catch (err) {
+    console.error("Supabase updateVisitor exception:", err);
+  }
 }
 
 export async function submitReply(visitorId: string | null, content: string) {
@@ -109,14 +118,20 @@ export async function submitReply(visitorId: string | null, content: string) {
     return true;
   }
   try {
+    // If visitorId is not a valid UUID (or null), convert it to undefined so it doesn't cause foreign key format errors
+    const formattedVisitorId = (visitorId && visitorId.length === 36) ? visitorId : null;
     const { error } = await supabase
       .from('replies')
-      .insert({ visitor_id: visitorId, content });
-    if (visitorId && !error) {
-      await supabase.from('visitors').update({ replied: true }).eq('id', visitorId);
+      .insert({ visitor_id: formattedVisitorId, content });
+    if (error) {
+      console.error("Supabase submitReply error:", error);
+    }
+    if (formattedVisitorId && !error) {
+      await supabase.from('visitors').update({ replied: true }).eq('id', formattedVisitorId);
     }
     return !error;
-  } catch {
+  } catch (err) {
+    console.error("Supabase submitReply exception:", err);
     return false;
   }
 }
