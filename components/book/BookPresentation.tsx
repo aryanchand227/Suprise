@@ -76,7 +76,7 @@ export default function BookPresentation({ title, subtitle, coverImageUrl, onOpe
                 >
                   <div className="w-36 h-36 overflow-hidden rounded-md border border-black/40 bg-cream-page">
                     <img
-                      src="/images/coverpic.jpg"
+                      src="/images/hugpic.jpg"
                       alt="Book cover pic"
                       className="w-full h-full object-cover"
                     />

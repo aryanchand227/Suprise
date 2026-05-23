@@ -90,7 +90,7 @@ export default function FinalPage() {
           className="p-3 bg-white rounded-2xl shadow-[0_15px_40px_rgba(0,0,0,0.35)] border border-amber-200/25 pointer-events-none"
         >
           <div className="w-48 h-48 overflow-hidden rounded-lg shadow-inner bg-cream-page">
-            <img src="/images/hugpic.jpg" alt="Our hug" className="w-full h-full object-cover" />
+            <img src="/images/coverpic.jpg" alt="Our memories" className="w-full h-full object-cover" />
           </div>
           <div className="mt-3 text-center">
             <p style={{ fontFamily: 'Dancing Script, cursive', fontSize: '1.25rem', color: '#4a2c8f', fontWeight: 'bold' }}>

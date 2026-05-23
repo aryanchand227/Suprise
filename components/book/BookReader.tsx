@@ -137,7 +137,7 @@ export default function BookReader({ chapters }: BookReaderProps) {
                 boxShadow: '0 8px 25px rgba(0,0,0,0.5)',
               }}>
                 <div className="w-28 h-28 overflow-hidden rounded-md border border-black/40 bg-cream-page">
-                  <img src="/images/coverpic.jpg" alt="Cover pic" className="w-full h-full object-cover" />
+                  <img src="/images/hugpic.jpg" alt="Cover pic" className="w-full h-full object-cover" />
                 </div>
               </div>
 
