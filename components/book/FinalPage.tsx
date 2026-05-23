@@ -55,12 +55,12 @@ export default function FinalPage() {
           className="flex flex-col items-center relative"
           style={{ height: 90, width: 220 }}
         >
-          <div 
+          <div
             className="flex flex-col items-center justify-center p-3 px-6 bg-white rounded-3xl shadow-[0_4px_15px_rgba(45,27,105,0.08)] relative"
             style={{ border: '1px solid rgba(155,114,207,0.1)' }}
           >
             <p style={{ fontFamily: 'Dancing Script, cursive', fontSize: '1rem', color: '#2d1b69', fontStyle: 'italic', fontWeight: 'bold' }}>
-              Miss you,
+              Happy Birthday,
             </p>
             <p style={{ fontFamily: 'Dancing Script, cursive', fontSize: '1.1rem', color: '#6b46c1', fontStyle: 'italic', fontWeight: 'bold' }}>
               Hasini.💜
@@ -74,13 +74,13 @@ export default function FinalPage() {
         {/* Real photo hug card */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ 
-            opacity: 1, 
+          animate={{
+            opacity: 1,
             scale: 1,
             y: [0, -4, 0],
             rotate: [-1.5, 1.5, -1.5]
           }}
-          transition={{ 
+          transition={{
             opacity: { duration: 0.8 },
             scale: { duration: 0.8, ease: 'backOut' },
             y: { duration: 5, repeat: Infinity, ease: 'easeInOut' },
