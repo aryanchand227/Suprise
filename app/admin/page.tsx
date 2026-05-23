@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
   getSettings, getChapters, getVisitors, getReplies, getAnalytics,
   updateSettings, updateChapter, createChapter, deleteChapter,
-  defaultSettings, defaultChapters,
+  defaultSettings, defaultChapters, isOffline,
   type SiteSettings, type Chapter, type Visitor, type Reply, type Analytics,
 } from '@/lib/supabase';
 
@@ -315,6 +315,34 @@ function DashboardTab({ analytics, visitors, replies, formatDate, formatDuration
   return (
     <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.4 }}>
       <h2 style={{ fontFamily: 'Playfair Display, serif', fontSize: '1.4rem', color: '#c4b5fd', marginBottom: 24 }}>Overview</h2>
+
+      {/* Offline Mode Warning Banner */}
+      {isOffline && (
+        <div 
+          style={{
+            padding: '16px 20px',
+            borderRadius: '12px',
+            border: '1px solid rgba(212, 175, 55, 0.4)',
+            background: 'rgba(45, 27, 105, 0.4)',
+            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.3), 0 0 15px rgba(155, 114, 207, 0.1)',
+            backdropFilter: 'blur(10px)',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '16px',
+            marginBottom: '24px',
+          }}
+        >
+          <span style={{ fontSize: '1.8rem' }}>⚠️</span>
+          <div style={{ textAlign: 'left' }}>
+            <h4 style={{ fontFamily: 'Playfair Display, serif', color: '#d4af37', fontSize: '1rem', fontWeight: 600 }}>
+              Offline Mock Mode Active (No Database Connected)
+            </h4>
+            <p style={{ fontFamily: 'Inter, system-ui, sans-serif', color: 'rgba(250, 243, 224, 0.85)', fontSize: '0.85rem', marginTop: '2px', lineHeight: '1.5' }}>
+              The application is running locally without a live connection to Supabase. This means visitors and replies will show as 0 on new devices because they are not being written to a shared database. To fix this, you must add your <strong>NEXT_PUBLIC_SUPABASE_URL</strong> and <strong>NEXT_PUBLIC_SUPABASE_ANON_KEY</strong> environment variables to your deployment platform (e.g. Vercel) and run the table setup script from <code>lib/supabase-schema.sql</code> in your Supabase SQL Editor.
+            </p>
+          </div>
+        </div>
+      )}
 
       {/* Stats Grid */}
       <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-10">

@@ -9,6 +9,7 @@ export default function ReplyPage() {
   const [content, setContent] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [charCount, setCharCount] = useState(0);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const { visitorId, startTime } = useAppStore();
@@ -21,6 +22,7 @@ export default function ReplyPage() {
   const handleSubmit = async () => {
     if (!content.trim() || isSubmitting) return;
     setIsSubmitting(true);
+    setSubmitError(null);
 
     // Save duration
     const vid = visitorId || (typeof window !== 'undefined' ? localStorage.getItem('visitorId') : null);
@@ -31,14 +33,18 @@ export default function ReplyPage() {
 
     const success = await submitReply(vid, content.trim());
 
-    if (success && vid) {
-      await updateVisitor(vid, { replied: true });
-    }
-
-    setTimeout(() => {
+    if (success) {
+      if (vid) {
+        await updateVisitor(vid, { replied: true });
+      }
+      setTimeout(() => {
+        setIsSubmitting(false);
+        setIsSubmitted(true);
+      }, 1200);
+    } else {
       setIsSubmitting(false);
-      setIsSubmitted(true);
-    }, 1200);
+      setSubmitError("Failed to save your reply. Please verify your internet connection or database tables setup.");
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -238,12 +244,27 @@ export default function ReplyPage() {
                 </div>
               </motion.div>
 
+              {/* Error message */}
+              <AnimatePresence>
+                {submitError && (
+                  <motion.p
+                    initial={{ opacity: 0, y: -5 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    className="text-sm mt-4 mb-2 text-center"
+                    style={{ color: '#f87171', fontFamily: 'EB Garamond, serif', fontStyle: 'italic' }}
+                  >
+                    ⚠️ {submitError}
+                  </motion.p>
+                )}
+              </AnimatePresence>
+
               {/* Submit Button */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.7 }}
-                className="flex flex-col items-center mt-8 gap-3"
+                className="flex flex-col items-center mt-6 gap-3"
               >
                 <motion.button
                   onClick={handleSubmit}
