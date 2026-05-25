@@ -151,7 +151,7 @@ export default function AdminPage() {
             <span style={{ fontSize: '1.2rem' }}>📒</span>
             <div>
               <h1 style={{ fontFamily: 'Playfair Display, serif', fontSize: '1.1rem', background: 'linear-gradient(135deg, #c4b5fd, #d4af37)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
-                My Thoughts — Admin
+                Diary — Admin
               </h1>
               <p style={{ fontFamily: 'EB Garamond, serif', fontSize: '0.7rem', color: 'rgba(155,114,207,0.5)' }}>Owner Control Panel</p>
             </div>

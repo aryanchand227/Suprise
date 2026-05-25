@@ -12,9 +12,11 @@ import { updateVisitor } from '@/lib/supabase';
 
 interface BookReaderProps {
   chapters: Chapter[];
+  title?: string;
+  subtitle?: string;
 }
 
-export default function BookReader({ chapters }: BookReaderProps) {
+export default function BookReader({ chapters, title = 'Diary', subtitle = '' }: BookReaderProps) {
   const bookRef = useRef<any>(null);
   const [currentPage, setCurrentPage] = useState(0);
   const [isFlipping, setIsFlipping] = useState(false);
@@ -142,24 +144,28 @@ export default function BookReader({ chapters }: BookReaderProps) {
               </div>
 
               <h1 style={{ fontFamily: 'Playfair Display, serif', fontSize: '2.4rem', color: '#f5e09a', fontStyle: 'italic', lineHeight: 1.3 }}>
-                My Thoughts
+                {title}
               </h1>
-              <div style={{ width: 100, height: 1, background: 'linear-gradient(90deg, transparent, #d4af37, transparent)', margin: '12px auto' }} />
-              <p style={{ fontFamily: 'EB Garamond, serif', fontSize: '1.05rem', color: 'rgba(212,175,55,0.6)', fontStyle: 'italic', lineHeight: 1.5 }}>
-                Some words I never stopped carrying.
-              </p>
+              {subtitle && (
+                <>
+                  <div style={{ width: 100, height: 1, background: 'linear-gradient(90deg, transparent, #d4af37, transparent)', margin: '12px auto' }} />
+                  <p style={{ fontFamily: 'EB Garamond, serif', fontSize: '1.05rem', color: 'rgba(212,175,55,0.6)', fontStyle: 'italic', lineHeight: 1.5 }}>
+                    {subtitle}
+                  </p>
+                </>
+              )}
             </div>
           </div>
 
           {/* Page 1: Table of Contents */}
           <div className="w-full h-full">
-            <TableOfContents chapters={chapters} onChapterClick={goToPage} />
+            <TableOfContents chapters={chapters} onChapterClick={goToPage} title={title} subtitle={subtitle} />
           </div>
 
           {/* Chapter pages */}
           {chapters.map((chapter, i) => (
             <div key={chapter.id} className="w-full h-full">
-              <PageContent chapter={chapter} pageNumber={i + 1} />
+              <PageContent chapter={chapter} pageNumber={i + 1} title={title} />
             </div>
           ))}
 

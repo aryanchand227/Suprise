@@ -317,7 +317,7 @@ export default function LockScreen() {
             textTransform: 'uppercase',
           }}
         >
-          My Thoughts · A Private Memory
+          Diary · A Private Memory
         </motion.p>
       </div>
 

@@ -6,9 +6,10 @@ import { Chapter } from '@/lib/supabase';
 interface PageContentProps {
   chapter: Chapter;
   pageNumber: number;
+  title?: string;
 }
 
-export default function PageContent({ chapter, pageNumber }: PageContentProps) {
+export default function PageContent({ chapter, pageNumber, title = 'Diary' }: PageContentProps) {
   const paragraphs = chapter.content.split('\n').filter(Boolean);
 
   return (
@@ -16,7 +17,7 @@ export default function PageContent({ chapter, pageNumber }: PageContentProps) {
       {/* Page number top */}
       <div className="absolute top-6 w-full flex justify-center">
         <span style={{ color: '#9b72cf', fontSize: '0.85rem', letterSpacing: '0.25em', textTransform: 'uppercase' }}>
-          ✦ My Thoughts ✦
+          ✦ {title} ✦
         </span>
       </div>
 

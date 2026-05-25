@@ -48,7 +48,7 @@ export default function BookPresentation({ title, subtitle, coverImageUrl, onOpe
               letterSpacing: '0.2em',
               transform: 'rotate(180deg)',
             }}>
-              MY THOUGHTS
+              {title.toUpperCase()}
             </p>
           </div>
 
@@ -95,16 +95,20 @@ export default function BookPresentation({ title, subtitle, coverImageUrl, onOpe
                   }}>
                     {title}
                   </h2>
-                  <div className="w-24 h-px mx-auto my-4" style={{ background: 'linear-gradient(90deg, transparent, #d4af37, transparent)' }} />
-                  <p style={{
-                    fontFamily: 'EB Garamond, serif',
-                    fontSize: '1rem',
-                    color: 'rgba(212,175,55,0.65)',
-                    fontStyle: 'italic',
-                    letterSpacing: '0.05em',
-                  }}>
-                    {subtitle}
-                  </p>
+                  {subtitle && (
+                    <>
+                      <div className="w-24 h-px mx-auto my-4" style={{ background: 'linear-gradient(90deg, transparent, #d4af37, transparent)' }} />
+                      <p style={{
+                        fontFamily: 'EB Garamond, serif',
+                        fontSize: '1rem',
+                        color: 'rgba(212,175,55,0.65)',
+                        fontStyle: 'italic',
+                        letterSpacing: '0.05em',
+                      }}>
+                        {subtitle}
+                      </p>
+                    </>
+                  )}
                 </div>
               </div>
             </div>

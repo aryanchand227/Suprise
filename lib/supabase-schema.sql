@@ -1,5 +1,5 @@
 -- ════════════════════════════════════════════
--- My Thoughts — Supabase Schema
+-- Diary — Supabase Schema
 -- Run this in your Supabase SQL Editor
 -- ════════════════════════════════════════════
 
@@ -14,8 +14,8 @@ CREATE TABLE IF NOT EXISTS settings (
   hint5 TEXT NOT NULL DEFAULT 'Six, for six letters in your name',
   hint6 TEXT NOT NULL DEFAULT 'Number of times I rewrote this',
   admin_password TEXT NOT NULL DEFAULT 'admin123',
-  book_title TEXT NOT NULL DEFAULT 'My Thoughts',
-  book_subtitle TEXT NOT NULL DEFAULT 'Some words I never stopped carrying.',
+  book_title TEXT NOT NULL DEFAULT 'Diary',
+  book_subtitle TEXT NOT NULL DEFAULT '',
   cover_image_url TEXT,
   CONSTRAINT single_row CHECK (id = 1)
 );

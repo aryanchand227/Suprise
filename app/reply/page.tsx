@@ -448,7 +448,7 @@ export default function ReplyPage() {
                   fontSize: '0.7rem',
                 }}
               >
-                My Thoughts · A Private Memory
+                Diary · A Private Memory
               </motion.p>
             </motion.div>
           )}

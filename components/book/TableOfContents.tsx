@@ -6,9 +6,11 @@ import { Chapter } from '@/lib/supabase';
 interface TableOfContentsProps {
   chapters: Chapter[];
   onChapterClick?: (index: number) => void;
+  title?: string;
+  subtitle?: string;
 }
 
-export default function TableOfContents({ chapters, onChapterClick }: TableOfContentsProps) {
+export default function TableOfContents({ chapters, onChapterClick, title = 'Diary', subtitle = '' }: TableOfContentsProps) {
   return (
     <div className="page-surface w-full h-full overflow-y-auto p-10 md:p-14" style={{ fontFamily: 'EB Garamond, serif' }}>
       {/* Header */}
@@ -28,7 +30,7 @@ export default function TableOfContents({ chapters, onChapterClick }: TableOfCon
           className="chapter-heading"
           style={{ fontSize: '2.6rem', fontWeight: 600, marginBottom: 6 }}
         >
-          My Thoughts
+          {title}
         </motion.h2>
         <motion.div
           initial={{ scaleX: 0 }}
@@ -36,14 +38,16 @@ export default function TableOfContents({ chapters, onChapterClick }: TableOfCon
           transition={{ delay: 0.3, duration: 0.6 }}
           style={{ width: 120, height: 1, background: 'linear-gradient(90deg, transparent, #9b72cf, transparent)', margin: '0 auto 8px' }}
         />
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.4 }}
-          style={{ color: '#6b46c1', fontSize: '1.1rem', fontStyle: 'italic' }}
-        >
-          Some words I never stopped carrying.
-        </motion.p>
+        {subtitle && (
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4 }}
+            style={{ color: '#6b46c1', fontSize: '1.1rem', fontStyle: 'italic' }}
+          >
+            {subtitle}
+          </motion.p>
+        )}
       </div>
 
       {/* Chapter List */}

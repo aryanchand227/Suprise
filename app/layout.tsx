@@ -2,12 +2,12 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "My Thoughts — A Secret Memory Book",
-  description: "An intimate, private memory book crafted with love. Only those who know the memories may enter.",
-  keywords: ["memory book", "love letter", "private", "emotional"],
+  title: "Diary — A Secret Memory Book",
+  description: "An intimate, private diary crafted with love. Only those who know the memories may enter.",
+  keywords: ["diary", "memory book", "love letter", "private", "emotional"],
   openGraph: {
-    title: "My Thoughts",
-    description: "Some words I never stopped carrying.",
+    title: "Diary",
+    description: "An intimate, private diary.",
     type: "website",
   },
 };

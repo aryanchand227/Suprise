@@ -279,8 +279,8 @@ export const defaultSettings: SiteSettings = {
   hint5: 'First digit of the weeks since I didn\'t text you',
   hint6: 'Addition of your birthdate',
   admin_password: '@ryan123',
-  book_title: 'My Thoughts',
-  book_subtitle: 'Some words I never stopped carrying.',
+  book_title: 'Diary',
+  book_subtitle: '',
   cover_image_url: null,
 };
 
