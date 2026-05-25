@@ -328,23 +328,7 @@ export default function BirthdaySurprise({ onComplete }: Props) {
               }}
             />
 
-            {/* Subtitle */}
-            <motion.p
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.9, duration: 0.7 }}
-              style={{
-                fontFamily: 'EB Garamond, serif',
-                fontSize: 'clamp(0.95rem, 2.5vw, 1.2rem)',
-                color: 'rgba(196,181,253,0.75)',
-                fontStyle: 'italic',
-                letterSpacing: '0.06em',
-                maxWidth: 440,
-                lineHeight: 1.6,
-              }}
-            >
-              A secret is waiting behind this door, just for you.
-            </motion.p>
+
 
             {/* Left and Right floating photos (Desktop view) */}
             <motion.div
